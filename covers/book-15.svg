@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 900" role="img" aria-label="Bìa sách Sapiens: Lược Sử Loài Người">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.85" y2="1">
+      <stop offset="0" stop-color="#925116"/>
+      <stop offset="0.55" stop-color="#784212"/>
+      <stop offset="1" stop-color="#42240a"/>
+    </linearGradient>
+    <linearGradient id="spine" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#000" stop-opacity="0.34"/>
+      <stop offset="0.06" stop-color="#fff" stop-opacity="0.14"/>
+      <stop offset="0.12" stop-color="#000" stop-opacity="0.10"/>
+      <stop offset="0.2" stop-color="#000" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="vig" cx="0.5" cy="0.42" r="0.95">
+      <stop offset="0.62" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.26"/>
+    </radialGradient>
+  </defs>
+  <rect width="600" height="900" fill="url(#bg)"/>
+  <rect x="26" y="26" width="548" height="848" fill="none" stroke="#ffffff" stroke-opacity="0.35" stroke-width="1.5"/>
+  <text x="300" y="98" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="19" letter-spacing="6" fill="#ffffff" fill-opacity="0.78">KHOA HỌC – LỊCH SỬ</text>
+  <path d="M252 122 H348" stroke="#d9b45c" stroke-width="2.5"/>
+  <g stroke="#ffffff" stroke-opacity="0.55" fill="none" stroke-width="3" stroke-linecap="round"><circle cx="300" cy="232" r="30"/><ellipse cx="300" cy="232" rx="104" ry="34" transform="rotate(-18 300 232)" stroke-opacity="0.45"/><ellipse cx="300" cy="232" rx="104" ry="34" transform="rotate(24 300 232)" stroke-opacity="0.28"/><circle cx="388" cy="176" r="4" fill="#ffffff" stroke="none" fill-opacity="0.8"/></g>
+  <text y="413" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-weight="bold" font-size="57" fill="#ffffff"><tspan x="300" dy="0">Sapiens: Lược</tspan><tspan x="300" dy="70">Sử Loài Người</tspan></text>
+  <path d="M264 668 H336" stroke="#d9b45c" stroke-width="2.5"/>
+  <text x="300" y="716" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="23" letter-spacing="3.5" fill="#ffffff" fill-opacity="0.94">YUVAL NOAH HARARI</text>
+  <text x="300" y="838" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="16.5" letter-spacing="4" fill="#ffffff" fill-opacity="0.72">NXB TRI THỨC</text>
+  <rect width="600" height="900" fill="url(#vig)"/>
+  <rect width="600" height="900" fill="url(#spine)"/>
+</svg>

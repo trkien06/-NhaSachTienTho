@@ -2,7 +2,7 @@
 
 **NhaSachTienTho** là hệ thống website bán sách cho **Nhà sách Tiến Thọ** (424 Nguyễn Trãi, Thanh Xuân, Hà Nội), được xây dựng trong khuôn khổ môn học Phát triển dự án công nghệ thông tin theo mô hình **Agile Scrum** (3 Sprint, 10 user story). Dự án nhằm số hóa hoạt động bán sách của nhà sách: khách hàng xem và mua sách trực tuyến, nhà sách quản lý danh mục, kho sách và đơn hàng ngay trên website.
 
-Dự án là **Frontend** hoàn chỉnh bằng HTML/CSS/JavaScript thuần, dữ liệu được lưu cục bộ bằng **localStorage** nên chạy ngay không cần cài đặt server hay cơ sở dữ liệu. Giao diện được thiết kế theo cùng design system với CourseDemy (theme tối, tông indigo, font Inter, navbar kính mờ, hero, thanh lọc và thẻ sách dạng card).
+Dự án là **Frontend** hoàn chỉnh bằng HTML/CSS/JavaScript thuần, dữ liệu được lưu cục bộ bằng **localStorage** nên chạy ngay không cần cài đặt server hay cơ sở dữ liệu. Giao diện theo phong cách nhà sách trực tuyến chuyên nghiệp: theme sáng, tông đỏ thương hiệu, font Be Vietnam Pro và Playfair Display, bìa sách SVG thiết kế riêng cho từng đầu sách, giá bìa và phần trăm giảm giá, hero, thanh lọc và thẻ sách dạng card.
 
 ---
 
@@ -23,6 +23,8 @@ website-nha-sach-tien-tho/
 ├── index.html      # Toàn bộ giao diện: trang chủ, cửa hàng, thanh toán, quản trị
 ├── style.css       # CSS styling cho toàn bộ website
 ├── app.js          # Logic xử lý: dữ liệu mẫu, tìm kiếm, giỏ hàng, đặt hàng, quản trị
+├── covers/         # Ảnh bìa SVG của 21 đầu sách (sinh tự động, chữ chuẩn tiếng Việt)
+├── tools/          # Script sinh bìa sách (gen_covers.py)
 ├── HUONG-DAN.md    # Hướng dẫn chạy và kịch bản demo theo từng user story
 └── README.md       # Tài liệu giới thiệu tổng quan (File này)
 ```

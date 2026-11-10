@@ -3,31 +3,93 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Nhà sách Tiến Thọ – Đọc sách không giới hạn</title>
+<title>Nhà sách Tiến Thọ – Mua sách online, giao tận nhà tại Hà Nội</title>
 <meta name="description" content="Nhà sách Tiến Thọ – mua sách trực tuyến: văn học, kinh tế, kỹ năng, thiếu nhi, truyện tranh. Giao hàng tận nhà tại Hà Nội.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='10' fill='%23b01e24'/%3E%3Cpath d='M24 12c-2.6-2.2-6-3-10-3v27c4 0 7.4.8 10 3 2.6-2.2 6-3 10-3V9c-4 0-7.4.8-10 3zm0 0v27' fill='none' stroke='white' stroke-width='2.6' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<div class="topbar">
+  <div class="container topbar-inner">
+    <span>424 Nguyễn Trãi, Thanh Xuân, Hà Nội</span>
+    <span class="topbar-right"><span>Hotline: <b>0983 476 532</b></span><span class="dot-sep"></span><span>Mở cửa 8h00 – 21h30 hằng ngày</span></span>
+  </div>
+</div>
 <nav id="navbar"></nav>
 <div id="toast-container"></div>
 <div id="spinner" class="hidden"><div class="spinner-ring"></div></div>
 
 <section id="view-home">
   <section class="hero-section">
-    <div class="container">
-      <h1 class="hero-title">Đọc bất cứ cuốn sách nào, <span>bất cứ lúc nào</span></h1>
-      <p class="hero-sub">Hàng chục đầu sách chọn lọc từ nhà sách Tiến Thọ, giao tận nhà trong nội thành Hà Nội. Miễn phí giao hàng cho đơn từ 200.000đ.</p>
-      <button class="btn btn-primary" data-nav="shop" style="padding:12px 28px;font-size:1rem">Khám phá kho sách</button>
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <p class="hero-eyebrow">Nhà sách Tiến Thọ · Từ 2010</p>
+        <h1 class="hero-title">Sách hay chọn lọc,<br>giao tận tay <span>bạn đọc</span></h1>
+        <p class="hero-sub">Kho sách văn học, kinh tế, kỹ năng và thiếu nhi được chọn kỹ bởi đội ngũ Tiến Thọ. Giao hàng trong 24 giờ tại nội thành Hà Nội, miễn phí cho đơn từ 200.000đ.</p>
+        <div class="hero-cta">
+          <button class="btn btn-primary btn-lg" data-nav="shop">Khám phá kho sách</button>
+          <button class="btn btn-outline btn-lg" data-catlink="Văn học">Sách văn học</button>
+        </div>
+        <div class="hero-stats">
+          <div><b>21+</b><span>Đầu sách chọn lọc</span></div>
+          <div><b>24h</b><span>Giao nội thành</span></div>
+          <div><b>7 ngày</b><span>Đổi trả nếu lỗi</span></div>
+        </div>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <img class="fan fan-left" src="covers/book-15.svg" alt="">
+        <img class="fan fan-mid" src="covers/book-4.svg" alt="">
+        <img class="fan fan-right" src="covers/book-17.svg" alt="">
+        <div class="hero-card">
+          <span class="hero-card-stars">★★★★★</span>
+          <span><b>4.8 / 5</b> từ bạn đọc Tiến Thọ</span>
+        </div>
+      </div>
     </div>
   </section>
+
+  <section class="trust-bar">
+    <div class="container trust-grid">
+      <div class="trust-item"><svg viewBox="0 0 24 24"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/></svg><div><b>Giao hàng nhanh</b><span>Nội thành Hà Nội trong 24h</span></div></div>
+      <div class="trust-item"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg><div><b>Thanh toán linh hoạt</b><span>COD, MoMo, ZaloPay</span></div></div>
+      <div class="trust-item"><svg viewBox="0 0 24 24"><path d="M4 9a8 8 0 0 1 14-3l2 2M20 15a8 8 0 0 1-14 3l-2-2"/><path d="M20 4v4h-4M4 20v-4h4"/></svg><div><b>Đổi trả dễ dàng</b><span>Trong 7 ngày nếu sách lỗi</span></div></div>
+      <div class="trust-item"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a12 12 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg><div><b>Hỗ trợ tận tâm</b><span>Hotline 0983 476 532</span></div></div>
+    </div>
+  </section>
+
   <main class="container section">
     <div class="section-head">
-      <h2>🔥 Sách bán chạy</h2>
+      <div>
+        <p class="eyebrow">Danh mục</p>
+        <h2>Chọn theo gu đọc của bạn</h2>
+      </div>
+    </div>
+    <div class="cat-chips">
+      <button class="chip" data-catlink="Văn học">Văn học</button>
+      <button class="chip" data-catlink="Kinh tế">Kinh tế</button>
+      <button class="chip" data-catlink="Kỹ năng sống">Kỹ năng sống</button>
+      <button class="chip" data-catlink="Thiếu nhi">Thiếu nhi</button>
+      <button class="chip" data-catlink="Truyện tranh">Truyện tranh</button>
+      <button class="chip" data-catlink="Khoa học – Lịch sử">Khoa học – Lịch sử</button>
+      <button class="chip" data-catlink="Trinh thám">Trinh thám</button>
+    </div>
+
+    <div class="section-head" style="margin-top:52px">
+      <div>
+        <p class="eyebrow">Được yêu thích nhất</p>
+        <h2>Sách bán chạy</h2>
+      </div>
       <button class="btn btn-outline btn-sm" data-nav="shop">Xem tất cả →</button>
     </div>
     <div id="bestGrid" class="courses-grid"></div>
-    <div class="section-head" style="margin-top:48px">
-      <h2>🆕 Sách mới về</h2>
+
+    <div class="section-head" style="margin-top:52px">
+      <div>
+        <p class="eyebrow">Mới phát hành</p>
+        <h2>Sách mới về</h2>
+      </div>
       <button class="btn btn-outline btn-sm" data-nav="shop">Xem tất cả →</button>
     </div>
     <div id="newGrid" class="courses-grid"></div>
@@ -37,7 +99,7 @@
 <main class="container section" id="view-shop" hidden>
   <div class="filter-bar">
     <div class="search-wrap">
-      <span class="search-icon">🔍</span>
+      <svg class="search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.8-3.8"/></svg>
       <input id="q" type="text" class="form-control" placeholder="Tìm theo tên sách hoặc tác giả...">
     </div>
     <select id="categoryFilter" class="form-control filter-select">
@@ -51,7 +113,7 @@
       <option value="150000-999999999">Trên 150.000đ</option>
     </select>
     <div class="star-filter-wrap">
-      <label for="ratingFilter">⭐ Đánh giá:</label>
+      <label for="ratingFilter">Đánh giá:</label>
       <select id="ratingFilter" class="form-control star-filter-select">
         <option value="">Tất cả</option>
         <option value="4.5">4.5 sao trở lên</option>
@@ -82,9 +144,9 @@
       <label class="fld">Số điện thoại<input id="coPhone" class="form-control" required pattern="[0-9]{9,11}"></label>
       <label class="fld">Địa chỉ giao hàng<input id="coAddr" class="form-control" required></label>
       <h3 style="margin-top:20px">Phương thức thanh toán</h3>
-      <label class="pay-opt"><input type="radio" name="pay" value="COD" checked> 💵 Thanh toán khi nhận hàng (COD)</label>
-      <label class="pay-opt"><input type="radio" name="pay" value="MoMo"> 🟣 Ví MoMo</label>
-      <label class="pay-opt"><input type="radio" name="pay" value="ZaloPay"> 🔵 ZaloPay</label>
+      <label class="pay-opt"><input type="radio" name="pay" value="COD" checked> <span class="pay-dot cod"></span> Thanh toán khi nhận hàng (COD)</label>
+      <label class="pay-opt"><input type="radio" name="pay" value="MoMo"> <span class="pay-dot momo"></span> Ví MoMo</label>
+      <label class="pay-opt"><input type="radio" name="pay" value="ZaloPay"> <span class="pay-dot zalo"></span> ZaloPay</label>
       <div id="qrBox" class="qr-box" hidden>
         <div class="qr" id="qrPattern"></div>
         <p id="qrText" class="muted"></p>
@@ -128,7 +190,7 @@
         <label class="fld">Tồn kho<input id="bStock" class="form-control" type="number" min="0" required></label>
         <label class="fld">Số trang<input id="bPages" class="form-control" type="number" min="1"></label>
         <label class="fld">Năm xuất bản<input id="bYear" class="form-control" type="number" min="1900" max="2100"></label>
-        <label class="fld">Màu bìa<input id="bColor" class="form-control" type="color" value="#6366f1" style="padding:4px;height:42px"></label>
+        <label class="fld">Màu bìa<input id="bColor" class="form-control" type="color" value="#b01e24" style="padding:4px;height:42px"></label>
       </div>
       <label class="fld">Mô tả<textarea id="bDesc" class="form-control" rows="3"></textarea></label>
       <label class="chk"><input type="checkbox" id="bNew"> Đánh dấu sách mới</label>
@@ -168,9 +230,30 @@
 
 <footer class="footer">
   <div class="container foot-grid">
-    <div><b>📚 Nhà sách Tiến Thọ</b><br>424 Nguyễn Trãi, Thanh Xuân, Hà Nội<br>Điện thoại: 0983 476 532</div>
-    <div><b>Giờ mở cửa</b><br>Thứ 2 – Chủ nhật: 8h00 – 21h30</div>
-    <div><b>Hỗ trợ</b><br>Giao hàng nội thành trong 24h<br>Đổi trả trong 7 ngày nếu sách lỗi</div>
+    <div class="foot-col">
+      <div class="foot-logo">
+        <svg viewBox="0 0 48 48"><rect width="48" height="48" rx="10" fill="#b01e24"/><path d="M24 12c-2.6-2.2-6-3-10-3v27c4 0 7.4.8 10 3 2.6-2.2 6-3 10-3V9c-4 0-7.4.8-10 3zm0 0v27" fill="none" stroke="white" stroke-width="2.6" stroke-linejoin="round"/></svg>
+        <b>Nhà sách Tiến Thọ</b>
+      </div>
+      <p>Nhà sách tại Thanh Xuân, Hà Nội — đồng hành cùng bạn đọc với những đầu sách chọn lọc và dịch vụ tận tâm.</p>
+    </div>
+    <div class="foot-col">
+      <b>Liên hệ</b>
+      <p>424 Nguyễn Trãi, Thanh Xuân, Hà Nội<br>Điện thoại: 0983 476 532<br>Email: lienhe@tientho.vn</p>
+    </div>
+    <div class="foot-col">
+      <b>Giờ mở cửa</b>
+      <p>Thứ 2 – Chủ nhật<br>8h00 – 21h30<br>Giao hàng nội thành trong 24h</p>
+    </div>
+    <div class="foot-col">
+      <b>Hỗ trợ khách hàng</b>
+      <p>Đổi trả trong 7 ngày nếu sách lỗi<br>Miễn phí giao hàng cho đơn từ 200.000đ<br>Thanh toán COD, MoMo, ZaloPay</p>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <div class="container foot-bottom-inner">
+      <span>© 2026 Nhà sách Tiến Thọ. Sản phẩm demo phục vụ học tập — thanh toán MoMo/ZaloPay ở chế độ mô phỏng.</span>
+    </div>
   </div>
 </footer>
 
@@ -204,7 +287,7 @@
 </div>
 
 <aside id="cartDrawer" class="drawer" hidden>
-  <div class="drawer-head"><h3>🛒 Giỏ hàng</h3><button class="modal-x" id="btnCloseCart">✕</button></div>
+  <div class="drawer-head"><h3>Giỏ hàng của bạn</h3><button class="modal-x" id="btnCloseCart">✕</button></div>
   <div id="cartItems" class="drawer-body"></div>
   <div class="drawer-foot">
     <div class="sum-row total"><span>Tổng cộng</span><b id="cartTotal"></b></div>

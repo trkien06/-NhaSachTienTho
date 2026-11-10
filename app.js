@@ -1,13 +1,13 @@
 const $ = s => document.querySelector(s);
 const $$ = s => document.querySelectorAll(s);
 const fmt = n => n.toLocaleString("vi-VN") + "đ";
-const DB_KEY = "tientho_db_v1";
+const DB_KEY = "tientho_db_v2";
 const SESSION_KEY = "tientho_session";
 const CART_KEY = "tientho_cart";
 const PAGE_SIZE = 9;
 
 function seedDB() {
-    return {
+    const data = {
         cats: ["Văn học", "Kinh tế", "Kỹ năng sống", "Thiếu nhi", "Truyện tranh", "Khoa học – Lịch sử", "Trinh thám"],
         books: [
             { id: 1, title: "Số Đỏ", author: "Vũ Trọng Phụng", cat: "Văn học", price: 85000, stock: 24, sold: 320, isNew: false, pages: 268, year: 2020, rating: 4.8, color: "#7d3c98", desc: "Tiểu thuyết trào phúng kinh điển về xã hội Việt Nam thời Pháp thuộc, xoay quanh nhân vật Xuân Tóc Đỏ từ kẻ vô danh leo lên đỉnh cao danh vọng một cách hài hước." },
@@ -39,6 +39,11 @@ function seedDB() {
         nextBook: 22,
         nextOrder: 1
     };
+    data.books.forEach(b => {
+        b.cover = "covers/book-" + b.id + ".svg";
+        b.list = Math.round(b.price / 0.82 / 1000) * 1000;
+    });
+    return data;
 }
 
 function saveDB() {
@@ -85,6 +90,22 @@ function stars(r) {
     return "★★★★★".slice(0, full) + "☆☆☆☆☆".slice(0, 5 - full);
 }
 
+const ICON_CART = '<svg viewBox="0 0 24 24"><circle cx="9.5" cy="20.5" r="1.5"/><circle cx="17" cy="20.5" r="1.5"/><path d="M2.5 3h2l2.5 12.2a1.6 1.6 0 0 0 1.6 1.3h7.7a1.6 1.6 0 0 0 1.6-1.3L20 7.5H6"/></svg>';
+const ICON_HOME = '<svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7"/><path d="M6 9.5V20h12V9.5"/><path d="M10 20v-5h4v5"/></svg>';
+const ICON_BOOK = '<svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></svg>';
+const ICON_BOX = '<svg viewBox="0 0 24 24"><path d="M21 8l-9-5-9 5v8l9 5 9-5z"/><path d="M3 8l9 5 9-5"/><path d="M12 13v8"/></svg>';
+const ICON_SLIDERS = '<svg viewBox="0 0 24 24"><path d="M4 8h9M19 8h1M4 16h3M13 16h7"/><circle cx="16" cy="8" r="2.2"/><circle cx="10" cy="16" r="2.2"/></svg>';
+const ICON_SEARCH_BIG = '<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.8-3.8"/></svg>';
+
+function discPct(b) {
+    return b.list && b.list > b.price ? Math.round((1 - b.price / b.list) * 100) : 0;
+}
+
+function coverTag(b) {
+    if (b.cover) return `<img class="cover-img" src="${b.cover}" alt="Bìa sách ${b.title}" loading="lazy">`;
+    return `<span class="mini-cover" style="background:${b.color}"><span class="mc-title">${b.title}</span><span class="mc-author">${b.author}</span></span>`;
+}
+
 function show(view) {
     ["home", "shop", "checkout", "orders", "admin"].forEach(v => {
         $("#view-" + v).hidden = v !== view;
@@ -95,27 +116,30 @@ function show(view) {
 function renderNavbar() {
     const nav = $("#navbar");
     const count = cartCount();
+    const cartLink = `<a class="nav-link" data-navlink="cart">${ICON_CART} Giỏ hàng${count ? `<span class="cart-badge">${count}</span>` : ""}</a>`;
     let right = "";
     if (session) {
         right = `
-        <a class="nav-link" data-navlink="home">🏠 Trang chủ</a>
-        <a class="nav-link" data-navlink="cart">🛒 Giỏ hàng${count ? `<span class="cart-badge">${count}</span>` : ""}</a>
-        <a class="nav-link" data-navlink="orders">📦 Đơn hàng</a>
-        ${session.role === "admin" ? '<a class="nav-link" data-navlink="admin">⚙️ Quản trị</a>' : ""}
+        <a class="nav-link" data-navlink="home">${ICON_HOME} Trang chủ</a>
+        <a class="nav-link" data-navlink="shop">${ICON_BOOK} Cửa hàng</a>
+        ${cartLink}
+        <a class="nav-link" data-navlink="orders">${ICON_BOX} Đơn hàng</a>
+        ${session.role === "admin" ? `<a class="nav-link" data-navlink="admin">${ICON_SLIDERS} Quản trị</a>` : ""}
         <a class="nav-avatar" data-navlink="orders" title="${session.name}"><span class="avatar-circle">${session.name.charAt(0).toUpperCase()}</span></a>
         <button class="btn btn-sm btn-outline-danger" data-navlink="logout">Đăng xuất</button>`;
     } else {
         right = `
-        <a class="nav-link" data-navlink="home">🏠 Trang chủ</a>
-        <a class="nav-link" data-navlink="cart">🛒 Giỏ hàng${count ? `<span class="cart-badge">${count}</span>` : ""}</a>
+        <a class="nav-link" data-navlink="home">${ICON_HOME} Trang chủ</a>
+        <a class="nav-link" data-navlink="shop">${ICON_BOOK} Cửa hàng</a>
+        ${cartLink}
         <button class="btn btn-sm btn-ghost" data-navlink="login">Đăng nhập</button>
         <button class="btn btn-sm btn-primary" data-navlink="register">Đăng ký</button>`;
     }
     nav.innerHTML = `
     <div class="nav-inner">
-      <a class="nav-logo" data-navlink="home" style="cursor:pointer">
-        <span class="logo-icon">📚</span>
-        <span class="logo-text">Tiến <span>Thọ</span></span>
+      <a class="nav-logo" data-navlink="home">
+        <span class="logo-icon"><svg viewBox="0 0 48 48"><rect width="48" height="48" rx="10" fill="#b01e24"/><path d="M24 12c-2.6-2.2-6-3-10-3v27c4 0 7.4.8 10 3 2.6-2.2 6-3 10-3V9c-4 0-7.4.8-10 3zm0 0v27" fill="none" stroke="white" stroke-width="2.6" stroke-linejoin="round"/></svg></span>
+        <span class="logo-text"><span class="logo-name">Tiến <span>Thọ</span></span><span class="logo-sub">Nhà sách</span></span>
       </a>
       <div class="nav-links">${right}</div>
     </div>`;
@@ -135,31 +159,25 @@ function renderCats() {
 
 function bookCard(b) {
     const out = b.stock <= 0;
-    const badge = out ? '<span class="thumb-badge out">HẾT HÀNG</span>'
-        : (b.isNew ? '<span class="thumb-badge">MỚI</span>' : (b.sold >= 400 ? '<span class="thumb-badge hot">BÁN CHẠY</span>' : ""));
+    const pct = discPct(b);
+    const badge = out ? '<span class="thumb-badge out">Hết hàng</span>'
+        : (b.isNew ? '<span class="thumb-badge">Mới</span>' : (b.sold >= 400 ? '<span class="thumb-badge hot">Bán chạy</span>' : ""));
     return `<div class="course-card">
       <a class="card-thumb-wrap" data-act="view" data-id="${b.id}">
-        <span class="thumb-bg" style="background:linear-gradient(135deg, ${b.color}, #1a2235)"></span>
-        <span class="mini-cover" style="background:${b.color}">
-          <span class="mc-title">${b.title}</span>
-          <span class="mc-author">${b.author}</span>
-        </span>
+        ${coverTag(b)}
+        ${pct ? `<span class="disc-badge">-${pct}%</span>` : ""}
         ${badge}
       </a>
       <div class="card-body">
+        <span class="card-cat">${b.cat}</span>
         <h3 class="card-title"><a data-act="view" data-id="${b.id}">${b.title}</a></h3>
-        <p class="card-instructor">👤 ${b.author}</p>
-        <div class="card-badges">
-          <span class="badge badge-outline">${b.cat}</span>
-          ${b.isNew ? '<span class="badge badge-new">Sách mới</span>' : ""}
-        </div>
-        <div class="star-line">${stars(b.rating)} <span class="rating-num">${b.rating}</span> <span class="sold">(Đã bán ${b.sold})</span></div>
+        <p class="card-instructor">${b.author}</p>
+        <div class="star-line">${stars(b.rating)} <span class="rating-num">${b.rating}</span> <span class="sold">(${b.sold} đã bán)</span></div>
         <div class="stock-line ${out ? "out" : ""}">${out ? "Hết hàng" : "Còn " + b.stock + " cuốn"}</div>
         <div class="card-footer">
-          <span class="price">${fmt(b.price)}</span>
+          <span class="price-box"><span class="price">${fmt(b.price)}</span>${pct ? `<span class="price-old">${fmt(b.list)}</span>` : ""}</span>
           <span class="card-actions">
-            <button class="icon-btn" data-act="add" data-id="${b.id}" title="Thêm vào giỏ" ${out ? "disabled" : ""}>🛒</button>
-            <button class="btn btn-sm btn-primary" data-act="view" data-id="${b.id}">Xem chi tiết</button>
+            <button class="add-btn" data-act="add" data-id="${b.id}" title="Thêm vào giỏ hàng" ${out ? "disabled" : ""}>${ICON_CART}</button>
           </span>
         </div>
       </div>
@@ -208,7 +226,7 @@ function renderShop() {
     const pageItems = list.slice((shopPage - 1) * PAGE_SIZE, shopPage * PAGE_SIZE);
     const box = $("#books-container");
     if (!list.length) {
-        box.innerHTML = `<div class="empty-state"><div class="empty-icon">🔍</div><p class="empty-text">Không tìm thấy sách phù hợp. Thử từ khóa hoặc danh mục khác nhé.</p></div>`;
+        box.innerHTML = `<div class="empty-state"><div class="empty-icon">${ICON_SEARCH_BIG}</div><p class="empty-text">Không tìm thấy sách phù hợp. Thử từ khóa hoặc danh mục khác nhé.</p></div>`;
     } else {
         box.innerHTML = `<div class="courses-grid">${pageItems.map(bookCard).join("")}</div>
         <p style="color:var(--text-dim);font-size:.85rem;margin-top:12px">Tìm thấy <strong>${list.length}</strong> cuốn sách</p>`;
@@ -237,13 +255,13 @@ function renderCart() {
     const box = $("#cartItems");
     const ids = Object.keys(cart);
     if (!ids.length) {
-        box.innerHTML = '<div class="empty-state"><div class="empty-icon">🛒</div><p class="empty-text">Giỏ hàng đang trống.</p></div>';
+        box.innerHTML = `<div class="empty-state"><div class="empty-icon">${ICON_CART}</div><p class="empty-text">Giỏ hàng đang trống.</p></div>`;
     } else {
         box.innerHTML = ids.map(id => {
             const b = bookById(id);
             if (!b) return "";
             return `<div class="cart-item">
-                <div class="thumb" style="background:${b.color}">${b.title}</div>
+                <div class="thumb">${b.cover ? `<img src="${b.cover}" alt="">` : `<div class="thumb-fallback" style="background:${b.color}">${b.title}</div>`}</div>
                 <div class="info">
                     <b>${b.title}</b><br>
                     <span class="muted">${fmt(b.price)}</span>
@@ -278,32 +296,35 @@ function addToCart(id, qty) {
 function openDetail(id) {
     const b = bookById(id);
     if (!b) return;
+    const pct = discPct(b);
     $("#bookDetail").innerHTML = `<div class="detail">
-        <div class="detail-cover" style="background:${b.color}">
-            <span class="dc-title">${b.title}</span>
-            <span class="dc-author">${b.author}</span>
-        </div>
+        <div class="detail-cover">${b.cover ? `<img src="${b.cover}" alt="Bìa sách ${b.title}">` : `<div class="dc-fallback" style="background:${b.color}"><span class="dc-title">${b.title}</span><span class="dc-author">${b.author}</span></div>`}</div>
         <div>
+            <span class="card-cat">${b.cat}</span>
             <h2>${b.title}</h2>
+            <p class="d-author">Tác giả: <b>${b.author}</b></p>
             <div class="star-line">${stars(b.rating)} <span class="rating-num">${b.rating}</span> <span class="sold">(Đã bán ${b.sold} cuốn)</span></div>
-            <div class="card-badges" style="margin-top:10px">
-              <span class="badge badge-outline">${b.cat}</span>
-              ${b.isNew ? '<span class="badge badge-new">Sách mới</span>' : ""}
+            <div class="price-block">
+                <span class="price">${fmt(b.price)}</span>
+                ${pct ? `<span class="price-old">${fmt(b.list)}</span><span class="disc-chip">-${pct}%</span>` : ""}
             </div>
             <div class="meta">
-                Tác giả: <b>${b.author}</b><br>
                 Danh mục: ${b.cat}<br>
                 Số trang: ${b.pages} · Năm xuất bản: ${b.year}<br>
                 Tình trạng: ${b.stock > 0 ? "Còn " + b.stock + " cuốn" : "Hết hàng"}
             </div>
             <p class="desc">${b.desc}</p>
-            <div class="price" style="font-size:1.4rem;margin-top:14px">${fmt(b.price)}</div>
             <div class="qty-row">
                 Số lượng:
                 <button class="qty-btn" id="dMinus">−</button>
                 <b id="dQty">1</b>
                 <button class="qty-btn" id="dPlus">+</button>
-                <button class="btn btn-primary" id="dAdd" ${b.stock <= 0 ? "disabled" : ""}>🛒 Thêm vào giỏ</button>
+                <button class="btn btn-primary" id="dAdd" ${b.stock <= 0 ? "disabled" : ""}>Thêm vào giỏ hàng</button>
+            </div>
+            <div class="detail-trust">
+                <span>Giao nội thành trong 24h</span>
+                <span>Đổi trả 7 ngày nếu sách lỗi</span>
+                <span>Miễn phí giao hàng từ 200.000đ</span>
             </div>
         </div>
     </div>`;
@@ -401,7 +422,7 @@ function orderHTML(o) {
 
 function renderOrders() {
     const list = myOrdersList();
-    $("#myOrders").innerHTML = list.length ? list.slice().reverse().map(orderHTML).join("") : '<div class="empty-state"><div class="empty-icon">📦</div><p class="empty-text">Bạn chưa có đơn hàng nào.</p></div>';
+    $("#myOrders").innerHTML = list.length ? list.slice().reverse().map(orderHTML).join("") : `<div class="empty-state"><div class="empty-icon">${ICON_BOX}</div><p class="empty-text">Bạn chưa có đơn hàng nào.</p></div>`;
 }
 
 function renderAdmin() {
@@ -428,7 +449,7 @@ function renderAdmin() {
 function resetBookForm() {
     $("#bookForm").reset();
     $("#bId").value = "";
-    $("#bColor").value = "#6366f1";
+    $("#bColor").value = "#b01e24";
     $("#bookFormTitle").textContent = "Thêm sách mới";
     $("#bCancel").hidden = true;
 }
@@ -467,10 +488,22 @@ document.addEventListener("click", e => {
         show(nav.dataset.nav);
         return;
     }
+    const catLink = e.target.closest("[data-catlink]");
+    if (catLink) {
+        e.preventDefault();
+        $("#categoryFilter").value = catLink.dataset.catlink;
+        query = "";
+        $("#q").value = "";
+        shopPage = 1;
+        renderShop();
+        show("shop");
+        return;
+    }
     const nl = e.target.closest("[data-navlink]");
     if (nl) {
         const k = nl.dataset.navlink;
         if (k === "home") show("home");
+        if (k === "shop") { shopPage = 1; renderShop(); show("shop"); }
         if (k === "cart") { renderCart(); $("#cartDrawer").hidden = false; }
         if (k === "orders") { renderOrders(); show("orders"); }
         if (k === "admin") { renderAdmin(); show("admin"); }
