@@ -1,0 +1,13 @@
+{
+  "name": "nha-sach-tien-tho-fullstack",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Website ban sach Nha sach Tien Tho - frontend + backend Node.js/Express",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

@@ -1,86 +1,89 @@
-# NhaSachTienTho — Website Bán Sách Online
+# Website nhà sách Tiến Thọ — bản FULLSTACK (Frontend + Backend thật)
 
-**NhaSachTienTho** là hệ thống website bán sách cho **Nhà sách Tiến Thọ** (424 Nguyễn Trãi, Thanh Xuân, Hà Nội), được xây dựng trong khuôn khổ môn học Phát triển dự án công nghệ thông tin theo mô hình **Agile Scrum** (3 Sprint, 10 user story). Dự án nhằm số hóa hoạt động bán sách của nhà sách: khách hàng xem và mua sách trực tuyến, nhà sách quản lý danh mục, kho sách và đơn hàng ngay trên website.
+Bản nâng cấp của website nhà sách Tiến Thọ: giao diện giữ nguyên, phía sau là **backend Node.js + Express** với REST API thật. Mọi dữ liệu (sách, tài khoản, đơn hàng, đánh giá, bình luận, mã giảm giá) được lưu ở server trong file `data.json`, không còn nằm ở localStorage của trình duyệt nữa.
 
-Dự án là **Frontend** hoàn chỉnh bằng HTML/CSS/JavaScript thuần, dữ liệu được lưu cục bộ bằng **localStorage** nên chạy ngay không cần cài đặt server hay cơ sở dữ liệu. Giao diện theo phong cách nhà sách trực tuyến chuyên nghiệp: theme sáng, tông đỏ thương hiệu, font Be Vietnam Pro và Playfair Display, bìa sách SVG thiết kế riêng cho từng đầu sách, giá bìa và phần trăm giảm giá, hero, thanh lọc và thẻ sách dạng card.
+## Công nghệ
 
----
+- Backend: Node.js + Express, dữ liệu lưu file JSON (`data.json`), mật khẩu băm bằng scrypt (Node crypto), đăng nhập bằng token Bearer.
+- Frontend: HTML/CSS/JavaScript thuần trong thư mục `public/`, gọi API bằng `fetch`.
 
-## 🚀 Công Nghệ Sử Dụng
+## Cách chạy
 
-| Thành phần | Công nghệ | Chi tiết |
-|---|---|---|
-| **Frontend** | HTML5 + CSS3 + JavaScript thuần (ES6) | Giao diện dạng Single-page, không dùng framework (React/Vue) để tối giản cấu trúc. |
-| **Lưu trữ dữ liệu** | **localStorage** | Lưu sách, danh mục, tài khoản người dùng, giỏ hàng và đơn hàng ngay trong trình duyệt. |
-| **Thanh toán** | Mô phỏng QR (Sandbox) | Thanh toán qua MoMo, ZaloPay ở mức giao diện + ghi nhận trạng thái, cùng tùy chọn COD. |
+Yêu cầu: máy đã cài Node.js (bản 18 trở lên).
 
----
-
-## 📂 Cấu Trúc Dự Án
-
-```text
-website-nha-sach-tien-tho/
-├── index.html      # Toàn bộ giao diện: trang chủ, cửa hàng, thanh toán, quản trị
-├── style.css       # CSS styling cho toàn bộ website
-├── app.js          # Logic xử lý: dữ liệu mẫu, tìm kiếm, giỏ hàng, đặt hàng, quản trị
-├── covers/         # Ảnh bìa SVG của 21 đầu sách (sinh tự động, chữ chuẩn tiếng Việt)
-├── tools/          # Script sinh bìa sách (gen_covers.py)
-├── HUONG-DAN.md    # Hướng dẫn chạy và kịch bản demo theo từng user story
-└── README.md       # Tài liệu giới thiệu tổng quan (File này)
+```bash
+npm install
+npm start
 ```
 
----
+Mở trình duyệt: http://localhost:3000
 
-## 👥 Vai Trò & Quyền Hạn Trong Hệ Thống
+- Lần chạy đầu tiên, server tự tạo `data.json` từ dữ liệu mẫu trong `seed.js`.
+- Muốn đổi cổng: `PORT=4000 npm start` (PowerShell: `$env:PORT=4000; npm start`).
+- Muốn quay về dữ liệu gốc: đăng nhập Admin → tab Hệ thống → Khôi phục dữ liệu gốc, hoặc xóa file `data.json` rồi chạy lại server.
 
-Dự án phân quyền thông qua 2 vai trò chính:
+## Tài khoản mẫu
 
-1. **Khách hàng (Customer)**:
-   - Xem danh sách sách theo từng danh mục, xem sách bán chạy và sách mới trên trang chủ.
-   - Tìm kiếm sách theo tên, tác giả; lọc theo khoảng giá và sắp xếp kết quả.
-   - Xem chi tiết sách (mô tả, giá, số lượng tồn kho, số trang, năm xuất bản).
-   - Đăng ký, đăng nhập, đăng xuất tài khoản.
-   - Quản lý giỏ hàng (thêm, tăng/giảm số lượng, xóa) và đặt hàng.
-   - Thanh toán bằng COD, ví MoMo hoặc ZaloPay (quét mã QR mô phỏng) và xem lại đơn hàng đã đặt.
-2. **Quản trị viên (Admin)**:
-   - Đăng nhập bằng tài khoản Admin được cài đặt sẵn trong dữ liệu mẫu.
-   - Quản lý sách: thêm, sửa, xóa sách, cập nhật giá và số lượng tồn kho.
-   - Quản lý danh mục: thêm, sửa, xóa danh mục sách.
-   - Xem toàn bộ đơn hàng của khách hàng.
-   - Khôi phục dữ liệu gốc khi cần demo lại từ đầu.
+| Vai trò | Email | Mật khẩu | Ghi chú |
+|---|---|---|---|
+| Quản trị viên | admin@tientho.vn | admin123 | Toàn quyền quản trị |
+| Khách hàng | an@gmail.com | 123456 | Đã có đơn DH0001 (Mắt Biếc) nên đánh giá được Mắt Biếc |
+| Khách hàng | binh@gmail.com | 123456 | Đã có đơn DH0002 (Đắc Nhân Tâm, MoMo, đã áp mã GIAM10) |
 
----
+Mã giảm giá mẫu: `GIAM10` (giảm 10%), `SACHMOI20` (giảm 20%).
 
-## 🛠️ Hướng Dẫn Khởi Chạy Nhanh
+## Cấu trúc thư mục
 
-### 1. Tải mã nguồn
-Clone dự án về máy hoặc tải file ZIP từ GitHub rồi giải nén.
+```
+website-nha-sach-tien-tho-fullstack/
+  server.js        Backend Express: toàn bộ REST API + phục vụ frontend
+  seed.js          Dữ liệu mẫu ban đầu (21 sách, 3 tài khoản, 2 đơn mẫu...)
+  package.json
+  data.json        File dữ liệu thật, server tự tạo sau lần chạy đầu
+  public/          Frontend (index.html, style.css, app.js, covers/)
+```
 
-### 2. Mở dự án bằng Live Server (khuyên dùng)
-Mở thư mục dự án bằng **Visual Studio Code**, cài extension **Live Server**, sau đó bấm chuột phải vào file `index.html` → **Open with Live Server**.
+## Danh sách API
 
-*Mở qua Live Server (localhost) giúp website chạy đúng như môi trường thật khi demo.*
+| Method | Đường dẫn | Quyền | Chức năng |
+|---|---|---|---|
+| POST | /api/auth/register | Công khai | Đăng ký tài khoản |
+| POST | /api/auth/login | Công khai | Đăng nhập, trả về token |
+| POST | /api/auth/logout | Đã đăng nhập | Đăng xuất |
+| GET | /api/auth/me | Đã đăng nhập | Thông tin tài khoản hiện tại |
+| GET | /api/books | Công khai | Danh sách sách đang bán |
+| GET | /api/books/:id | Công khai | Chi tiết một cuốn sách |
+| GET | /api/books/:id/social | Công khai | Đánh giá + bình luận của sách, quyền đánh giá của người đang xem |
+| POST | /api/books/:id/reviews | Đã mua sách | Gửi đánh giá (server kiểm tra lịch sử mua) |
+| POST | /api/books/:id/comments | Đã đăng nhập | Gửi bình luận |
+| GET | /api/categories | Công khai | Danh sách danh mục |
+| POST | /api/books | Admin | Đăng bán sách (vào trạng thái chờ duyệt) |
+| PUT | /api/books/:id | Admin | Sửa sách |
+| DELETE | /api/books/:id | Admin | Xóa sách |
+| GET | /api/admin/books | Admin | Toàn bộ sách gồm cả chờ duyệt |
+| POST | /api/books/:id/approve | Admin | Duyệt bán sách |
+| POST | /api/books/:id/reject | Admin | Từ chối (xóa) sách chờ duyệt |
+| POST/PUT/DELETE | /api/categories... | Admin | Thêm, sửa, xóa danh mục |
+| GET | /api/admin/users | Admin | Danh sách người dùng |
+| PATCH | /api/admin/users/:email/lock | Admin | Khóa / mở khóa tài khoản |
+| POST | /api/orders | Công khai | Đặt hàng (server tự tính tiền, kiểm tra tồn kho, áp mã giảm) |
+| GET | /api/orders/mine | Đã đăng nhập | Đơn hàng của tôi |
+| GET | /api/orders/lookup?phone= | Công khai | Tra đơn của khách vãng lai theo số điện thoại |
+| GET | /api/admin/orders | Admin | Tất cả đơn hàng |
+| PATCH | /api/admin/orders/:id/status | Admin | Đổi trạng thái đơn |
+| POST | /api/promos/validate | Công khai | Kiểm tra mã giảm giá |
+| GET/POST/PUT/DELETE | /api/admin/promos... | Admin | Quản lý mã giảm giá |
+| GET | /api/admin/stats | Admin | Thống kê: người dùng, đầu sách, đơn hàng, doanh thu |
+| POST | /api/admin/reset | Admin | Khôi phục dữ liệu mẫu |
 
-### 3. Hoặc mở trực tiếp
-Mở thẳng file `index.html` bằng trình duyệt. Mọi tính năng vẫn hoạt động bình thường.
+## Đối chiếu 15 user story
 
-### 4. Tài khoản mặc định
-Sau khi mở website, hệ thống đã có sẵn dữ liệu mẫu gồm 21 đầu sách và tài khoản:
-* **Admin**: `admin@tientho.vn` / `admin123`
-* **Khách hàng**: tự đăng ký tài khoản mới tại mục Đăng nhập → Đăng ký.
+Cả 15 story của Product Backlog đều chạy trên API thật: đăng ký/đăng nhập/đăng xuất (token), tìm kiếm, xem chi tiết, lọc sách, giỏ hàng (giỏ vẫn giữ ở trình duyệt của khách, đơn hàng lưu ở server), thanh toán MoMo/ZaloPay/COD, quản lý sách, đăng bán sách, quản lý người dùng (khóa/mở khóa — tài khoản bị khóa đăng nhập bị server chặn), đánh giá sách (chỉ khách đã mua, server kiểm tra), bình luận và trao đổi, kiểm duyệt sách (sách chờ duyệt không xuất hiện ở cửa hàng), quản lý thanh toán (đổi trạng thái đơn), tạo mã giảm giá, thống kê.
 
----
+Lưu ý: bước thanh toán MoMo/ZaloPay: website tự sinh mã QR động theo chuẩn VietQR từ tài khoản nhận tiền thật của cửa hàng, gắn sẵn đúng số tiền của từng đơn — khách quét là số tiền tự điền; website vẫn không tự xác nhận giao dịch như cổng thanh toán merchant. Toàn bộ phần còn lại (tính tiền, mã giảm, tồn kho, trạng thái đơn) đều xử lý thật ở server.
 
-## 🧪 Kịch Bản Demo Theo User Story
+## Ghi chú kỹ thuật
 
-Toàn bộ 10 user story trong Product Backlog của báo cáo đều thao tác được trên website. Bảng đối chiếu từng user story với thao tác demo cụ thể nằm trong file [HUONG-DAN.md](HUONG-DAN.md).
-
-Một số thao tác tiêu biểu:
-1. Thanh toán MoMo/ZaloPay: thêm sách vào giỏ → Thanh toán → chọn MoMo hoặc ZaloPay → quét mã QR → xác nhận, đơn hàng được ghi nhận và tồn kho tự động trừ.
-2. Quản trị: đăng nhập Admin → mục **Quản trị** để thêm/sửa/xóa sách và danh mục.
-
----
-
-## 📖 Tài Liệu Chi Tiết
-* Để xem hướng dẫn chạy từng bước và kịch bản demo theo 10 user story: Đọc [HUONG-DAN.md](HUONG-DAN.md).
-* Báo cáo phát triển dự án (phác thảo, hợp đồng, Product Backlog, kế hoạch 3 Sprint): xem tài liệu môn học của Nhóm 13.
+- Mật khẩu không lưu dạng thô: server băm bằng scrypt kèm salt riêng từng tài khoản.
+- Token đăng nhập lưu ở bộ nhớ server; khởi động lại server thì mọi phiên đăng nhập hết hiệu lực (đăng nhập lại là dùng tiếp).
+- Server kiểm tra quyền ở mọi API quản trị: gọi API admin mà không có token admin sẽ nhận 401/403.
