@@ -1,6 +1,4 @@
-# Website nhà sách Tiến Thọ — bản FULLSTACK (Frontend + Backend thật)
-
-Bản nâng cấp của website nhà sách Tiến Thọ: giao diện giữ nguyên, phía sau là **backend Node.js + Express** với REST API thật. Mọi dữ liệu (sách, tài khoản, đơn hàng, đánh giá, bình luận, mã giảm giá) được lưu ở server trong file `data.json`, không còn nằm ở localStorage của trình duyệt nữa.
+# Website nhà sách Tiến Thọ 
 
 ## Công nghệ
 
